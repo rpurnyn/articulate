@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articulate — 28-Day Speaking Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1209;
+  --paper: #f5f0e8;
+  --cream: #ede6d6;
+  --amber: #c8853a;
+  --amber-light: #e8a855;
+  --amber-dark: #8a5520;
+  --sage: #6b7c6a;
+  --rust: #b04030;
+  --gold: #d4a840;
+  --muted: #7a6e60;
+  --card: #fffdf6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.5;
+}
+
+/* ─── HEADER ─── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 40px;
+  border-bottom: 1.5px solid rgba(26,18,9,0.12);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.logo span { color: var(--amber); font-style: italic; }
+
+.progress-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  border: 1px solid rgba(26,18,9,0.1);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.progress-pill .day-num {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--amber);
+}
+
+/* ─── MAIN LAYOUT ─── */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ─── HERO / TODAY CARD ─── */
+.today-hero {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 48px 52px;
+  margin-bottom: 40px;
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.today-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,133,58,0.25), transparent 70%);
+}
+.today-hero::after {
+  content: '"';
+  position: absolute;
+  bottom: -30px; right: 36px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18rem;
+  line-height: 1;
+  color: rgba(200,133,58,0.08);
+  pointer-events: none;
+}
+
+.today-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 16px;
+}
+
+.today-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  max-width: 600px;
+}
+
+.today-focus {
+  font-size: 0.95rem;
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 36px;
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+.start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--amber);
+  color: var(--ink);
+  border: none;
+  border-radius: 100px;
+  padding: 14px 32px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.start-btn:hover {
+  background: var(--amber-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(200,133,58,0.35);
+}
+.start-btn svg { transition: transform 0.2s; }
+.start-btn:hover svg { transform: translateX(4px); }
+
+/* ─── PRACTICE MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,18,9,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--card);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 44px;
+  position: relative;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(40px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--cream);
+  border: none;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: background 0.2s;
+}
+.modal-close:hover { background: var(--cream); color: var(--ink); }
+
+.exercise-step {
+  display: none;
+}
+.exercise-step.active { display: block; }
+
+.step-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+}
+
+.step-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.drill-box {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.drill-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,133,58,0.1), transparent);
+  pointer-events: none;
+}
+
+.drill-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.drill-phonetic {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+}
+
+.timer-ring {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.timer-svg { transform: rotate(-90deg); }
+.timer-track { fill: none; stroke: var(--cream); stroke-width: 5; }
+.timer-fill { fill: none; stroke: var(--amber); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+
+.timer-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: center;
+  margin: 8px 0 24px;
+}
+
+.nav-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn-prev, .btn-next {
+  flex: 1;
+  padding: 13px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.btn-prev { background: var(--cream); color: var(--muted); }
+.btn-prev:hover { background: var(--cream); color: var(--ink); }
+.btn-next { background: var(--amber); color: var(--ink); }
+.btn-next:hover { background: var(--amber-light); transform: translateY(-1px); }
+
+.complete-section {
+  text-align: center;
+  padding: 20px 0;
+}
+.complete-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.xp-badge {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* ─── CALENDAR GRID ─── */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.section-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  border: 1.5px solid rgba(26,18,9,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--card);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.cal-day:hover { border-color: var(--amber); transform: translateY(-2px); }
+.cal-day.today { border-color: var(--amber); background: rgba(200,133,58,0.06); }
+.cal-day.today .day-num-cal { color: var(--amber); }
+.cal-day.done { background: var(--ink); border-color: var(--ink); }
+.cal-day.done .day-num-cal { color: var(--paper); }
+.cal-day.done::after { content: '✓'; position: absolute; font-size: 0.7rem; color: var(--amber); bottom: 6px; right: 8px; }
+.cal-day.locked { opacity: 0.35; cursor: default; pointer-events: none; }
+
+.day-num-cal { font-size: 1rem; font-weight: 500; }
+.day-theme-cal { font-size: 0.6rem; color: var(--muted); text-align: center; margin-top: 3px; font-family: 'DM Sans', sans-serif; line-height: 1.2; padding: 0 4px; }
+.cal-day.done .day-theme-cal { color: rgba(245,240,232,0.5); }
+
+/* ─── TIPS SECTION ─── */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.tip-card {
+  background: var(--card);
+  border: 1.5px solid rgba(26,18,9,0.08);
+  border-radius: 16px;
+  padding: 24px;
+}
+.tip-icon { font-size: 1.5rem; margin-bottom: 12px; }
+.tip-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+.tip-body { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── STREAK ─── */
+.streak-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card);
+  border: 1.5px solid rgba(26,18,9,0.08);
+  border-radius: 16px;
+  padding: 20px 28px;
+  margin-bottom: 40px;
+}
+.streak-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--amber);
+  line-height: 1;
+}
+.streak-label { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.streak-label strong { display: block; color: var(--ink); font-size: 0.95rem; }
+.streak-dots {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1.5px solid rgba(26,18,9,0.08);
+}
+.dot.filled { background: var(--amber); border-color: var(--amber); }
+
+/* ─── PRONUNCIATION GUIDE ─── */
+.pronun-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.sound-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--amber);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.sound-label { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+.sound-label strong { display: block; font-size: 1rem; color: var(--ink); }
+
+.sounds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.sound-tile {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+}
+.sound-tile:hover, .sound-tile.playing {
+  border-color: var(--amber);
+  background: rgba(200,133,58,0.08);
+  transform: translateY(-2px);
+}
+.sound-tile.playing { box-shadow: 0 0 0 3px rgba(200,133,58,0.2); }
+.ipa-symbol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.ipa-word {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--amber);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.ipa-desc {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.speak-icon {
+  display: inline-block;
+  width: 20px; height: 20px;
+  background: var(--amber);
+  border-radius: 50%;
+  line-height: 20px;
+  font-size: 0.6rem;
+  color: var(--ink);
+  margin-top: 6px;
+}
+
+.mouth-diagram {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.mouth-svg-wrap { flex-shrink: 0; }
+.mouth-instructions { color: rgba(245,240,232,0.75); font-size: 0.83rem; line-height: 1.8; }
+.mouth-instructions strong { color: var(--amber); display: block; margin-bottom: 4px; font-size: 0.9rem; }
+.mouth-instructions li { margin-left: 14px; margin-bottom: 2px; }
+
+.word-examples {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.word-ex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1.5px solid rgba(26,18,9,0.08);
+  border-radius: 100px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.85rem;
+}
+.word-ex:hover { border-color: var(--amber); background: rgba(200,133,58,0.06); }
+.word-ex .play-dot {
+  width: 18px; height: 18px;
+  background: var(--amber);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.5rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.word-ex .word-ipa { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+
+.tts-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+.tts-bar .tts-label { font-size: 0.8rem; color: var(--muted); flex: 1; line-height: 1.4; }
+.tts-speak-btn {
+  background: var(--amber);
+  color: var(--ink);
+  border: none;
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tts-speak-btn:hover { background: var(--amber-light); }
+.tts-speak-btn.speaking { background: var(--sage); color: white; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  header { padding: 16px 20px; }
+  .today-hero { padding: 32px 28px; }
+  .today-title { font-size: 1.75rem; }
+  main { padding: 28px 16px 60px; }
+  .modal { padding: 28px 24px; }
+  .calendar { grid-template-columns: repeat(7,1fr); gap: 6px; }
+  .cal-day { border-radius: 10px; }
+  .day-theme-cal { display: none; }
+  .auth-card { padding: 32px 24px; }
+  .admin-panel { padding: 20px 16px; }
+}
+
+/* ─── AUTH SCREEN ─── */
+#authScreen {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#authScreen::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,133,58,0.18), transparent 65%);
+  pointer-events: none;
+}
+
+.auth-card {
+  background: var(--card);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 44px;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.auth-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.auth-logo span { color: var(--amber); font-style: italic; }
+.auth-tagline { font-size: 0.82rem; color: var(--muted); margin-bottom: 32px; line-height: 1.5; }
+
+.auth-tabs {
+  display: flex;
+  background: var(--cream);
+  border-radius: 100px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+}
+.auth-tab.active { background: var(--ink); color: var(--paper); }
+
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.auth-form.hidden { display: none; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-input {
+  background: var(--cream);
+  border: 1.5px solid rgba(26,18,9,0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus { border-color: var(--amber); background: var(--card); }
+.form-input.error { border-color: var(--rust); }
+
+.form-error {
+  font-size: 0.78rem;
+  color: var(--rust);
+  min-height: 18px;
+  font-family: 'DM Mono', monospace;
+}
+
+.auth-submit {
+  background: var(--amber);
+  color: var(--ink);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 4px;
+  width: 100%;
+}
+.auth-submit:hover { background: var(--amber-light); transform: translateY(-1px); }
+.auth-submit:active { transform: translateY(0); }
+.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--muted); font-size: 0.78rem;
+  margin: 4px 0;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(26,18,9,0.1);
+}
+
+.password-wrap { position: relative; }
+.toggle-pw {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  font-size: 0.8rem; color: var(--muted); padding: 4px;
+}
+
+.strength-bar {
+  height: 4px; border-radius: 2px; background: var(--cream);
+  margin-top: 6px; overflow: hidden;
+}
+.strength-fill {
+  height: 100%; border-radius: 2px; width: 0%;
+  transition: width 0.3s, background 0.3s;
+}
+
+/* ─── USER AVATAR / HEADER ─── */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: var(--cream);
+  border: 1px solid rgba(26,18,9,0.1);
+  border-radius: 100px;
+  padding: 6px 14px 6px 6px;
+  transition: background 0.2s;
+  position: relative;
+}
+.user-menu:hover { background: var(--cream); }
+.user-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.82rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.user-name { font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--card);
+  border: 1.5px solid rgba(26,18,9,0.1);
+  border-radius: 14px;
+  min-width: 180px;
+  padding: 8px;
+  box-shadow: 0 8px 32px rgba(26,18,9,0.12);
+  display: none;
+  z-index: 200;
+}
+.user-dropdown.open { display: block; animation: slideUp 0.15s ease; }
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: var(--ink);
+}
+.dropdown-item:hover { background: var(--cream); }
+.dropdown-item.danger { color: var(--rust); }
+.dropdown-sep { height: 1px; background: rgba(26,18,9,0.08); margin: 4px 0; }
+
+/* ─── ADMIN PANEL ─── */
+#adminPanel {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,18,9,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 8000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#adminPanel.open { display: flex; }
+
+.admin-card {
+  background: var(--card);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 40px 44px;
+  position: relative;
+  animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+.admin-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 28px;
+}
+.admin-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700;
+}
+.admin-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+.admin-close {
+  background: var(--cream); border: none;
+  width: 36px; height: 36px; border-radius: 50%;
+  cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); flex-shrink: 0;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.stat-box {
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900;
+  color: var(--amber);
+}
+.stat-lbl { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+.users-table-wrap { overflow-x: auto; }
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.users-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1.5px solid rgba(26,18,9,0.1);
+}
+.users-table td {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(26,18,9,0.06);
+  vertical-align: middle;
+}
+.users-table tr:last-child td { border-bottom: none; }
+.users-table tr:hover td { background: var(--cream); }
+
+.user-row-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--amber); color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.78rem;
+  font-family: 'DM Mono', monospace;
+}
+.badge-admin {
+  display: inline-block;
+  background: rgba(200,133,58,0.15);
+  color: var(--amber-dark);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(200,133,58,0.3);
+}
+.badge-user {
+  display: inline-block;
+  background: rgba(107,124,106,0.12);
+  color: var(--sage);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+.copy-email-btn {
+  background: none; border: 1px solid rgba(26,18,9,0.1);
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 0.75rem; cursor: pointer; color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.copy-email-btn:hover { background: var(--cream); color: var(--ink); border-color: var(--amber); }
+
+.export-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: var(--paper);
+  border: none; border-radius: 10px;
+  padding: 10px 20px; font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  cursor: pointer; margin-top: 20px;
+  transition: opacity 0.2s;
+}
+.export-btn:hover { opacity: 0.85; }
+
+.empty-users {
+  text-align: center; padding: 40px 20px;
+  color: var(--muted); font-size: 0.88rem;
+}
+.empty-users span { display: block; font-size: 2rem; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ─── AUTH SCREEN ─── -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">Artic<span>ulate</span></div>
+    <div class="auth-tagline">Your 28-day journey to clear, confident speaking starts here.</div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Create Account</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="auth-form" id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-wrap">
+          <input class="form-input" id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password">
+          <button class="toggle-pw" type="button" onclick="togglePw('loginPassword', this)">👁</button>
+        </div>
+      </div>
+      <div class="form-error" id="loginError"></div>
+      <button class="auth-submit" onclick="handleLogin()">Sign In →</button>
+      <div class="auth-divider">or continue as</div>
+      <button class="auth-submit" style="background:var(--cream);color:var(--muted);font-weight:400;" onclick="handleGuest()">Guest (no account)</button>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="auth-form hidden" id="registerForm">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" id="regName" type="text" placeholder="Jane Smith" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" id="regEmail" type="email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-wrap">
+          <input class="form-input" id="regPassword" type="password" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)">
+          <button class="toggle-pw" type="button" onclick="togglePw('regPassword', this)">👁</button>
+        </div>
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="password-wrap">
+          <input class="form-input" id="regConfirm" type="password" placeholder="Repeat password" autocomplete="new-password">
+          <button class="toggle-pw" type="button" onclick="togglePw('regConfirm', this)">👁</button>
+        </div>
+      </div>
+      <div class="form-error" id="registerError"></div>
+      <button class="auth-submit" onclick="handleRegister()">Create Account →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ADMIN PANEL ─── -->
+<div id="adminPanel">
+  <div class="admin-card">
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">User Registry</div>
+        <div class="admin-sub">All registered accounts — email list for future campaigns</div>
+      </div>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-stats">
+      <div class="stat-box">
+        <div class="stat-num" id="statTotal">0</div>
+        <div class="stat-lbl">Total Users</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statActive">0</div>
+        <div class="stat-lbl">Active (7 days)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statComplete">0</div>
+        <div class="stat-lbl">Completed 28 Days</div>
+      </div>
+    </div>
+    <div class="users-table-wrap">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Joined</th>
+            <th>Progress</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody"></tbody>
+      </table>
+      <div class="empty-users" id="emptyUsers" style="display:none">
+        <span>👥</span>No registered users yet. Share the app to grow your list!
+      </div>
+    </div>
+    <button class="export-btn" onclick="exportEmails()">
+      ⬇ Export Email List (CSV)
+    </button>
+  </div>
+</div>
+
+<header>
+  <div class="logo">Artic<span>ulate</span></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="progress-pill">
+      Day <span class="day-num" id="headerDay">1</span> / 28
+    </div>
+    <div class="user-menu" id="userMenu" onclick="toggleDropdown()">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <span class="user-name" id="userDisplayName">Account</span>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-item" onclick="openAdmin(event)" id="adminMenuItem" style="display:none">⚙️ User Registry</div>
+        <div class="dropdown-sep" id="adminSep" style="display:none"></div>
+        <div class="dropdown-item" onclick="handleLogout(event)">🚪 Sign Out</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Today Hero -->
+  <div class="today-hero" id="todayHero">
+    <div class="today-label">Today's Session</div>
+    <div class="today-title" id="heroTitle">Warming the Voice</div>
+    <div class="today-focus" id="heroFocus">Begin with breath support and lip trills. Every great speaker starts by waking up their articulators gently before demanding precision.</div>
+    <button class="start-btn" onclick="openPractice()">
+      Begin Practice
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Streak -->
+  <div class="streak-bar">
+    <div class="streak-num" id="streakNum">0</div>
+    <div class="streak-label">
+      <strong>Day Streak</strong>
+      Keep your momentum going daily
+    </div>
+    <div class="streak-dots" id="streakDots"></div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="section-title">28-Day Journey</div>
+  <div class="section-sub">Track your progress through four weeks of targeted articulation work</div>
+  <div class="calendar" id="calendar"></div>
+
+  <!-- Tips -->
+  <div class="section-title">Technique Pillars</div>
+  <div class="section-sub">The foundations behind every exercise in this program</div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">💨</div>
+      <div class="tip-title">Breath Support</div>
+      <div class="tip-body">All articulation flows from your breath. Diaphragmatic breathing gives your words power, clarity, and control without tension in the throat.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">👄</div>
+      <div class="tip-title">Lip & Tongue Precision</div>
+      <div class="tip-body">Crisp consonants require active, deliberate lip and tongue placement. Lazy articulators create mumbled, indistinct speech.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔊</div>
+      <div class="tip-title">Resonance & Placement</div>
+      <div class="tip-body">Forward resonance brings warmth and projection. Feel vibration in your lips and cheekbones, not just your throat.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-title">Deliberate Repetition</div>
+      <div class="tip-body">Slow, conscious repetition with perfect form beats fast and sloppy practice. Quality reps build lasting muscle memory.</div>
+    </div>
+  </div>
+</main>
+
+<!-- Practice Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closePractice()">✕</button>
+
+    <!-- Step 0: Pronunciation Guide -->
+    <div class="exercise-step active" id="step0">
+      <div class="step-tag">Before You Begin — Pronunciation Guide</div>
+      <div class="step-heading" id="s0heading">Sound Breakdown</div>
+      <div class="step-desc" id="s0intro">Learn exactly how to form today's target sounds before you practice them. Tap any word to hear it spoken aloud.</div>
+
+      <!-- Mouth diagram -->
+      <div class="mouth-diagram" id="s0mouthDiagram">
+        <div class="mouth-svg-wrap" id="s0svgWrap"></div>
+        <div class="mouth-instructions" id="s0mouthInstructions"></div>
+      </div>
+
+      <!-- Sound tiles -->
+      <div class="sounds-grid" id="s0soundsGrid"></div>
+
+      <!-- Word examples with TTS -->
+      <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--amber);margin-bottom:10px;text-transform:uppercase;">Tap to Hear Examples</div>
+      <div class="word-examples" id="s0wordExamples"></div>
+
+      <!-- TTS bar for full phrase -->
+      <div class="tts-bar">
+        <div class="tts-label">🔊 Hear today's tongue twister spoken clearly at a slow practice pace</div>
+        <button class="tts-speak-btn" id="ttsBtn" onclick="speakPhrase()">▶ Play Example</button>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn-prev" onclick="closePractice()">✕ Exit</button>
+        <button class="btn-next" onclick="goStep(1)">Start Practice →</button>
+      </div>
+    </div>
+
+    <!-- Step 1: Warmup -->
+    <div class="exercise-step" id="step1">
+      <div class="step-tag">Step 1 of 4 — Warmup</div>
+      <div class="step-heading">Breath & Body Warmup</div>
+      <div class="step-desc">Take 5 slow belly breaths. On each exhale, release on a gentle "hahhh." Feel your jaw, neck, and shoulders soften. Your voice needs a relaxed body to work from.</div>
+      <div class="drill-box">
+        <div class="drill-text">"Haaah... Mmmm... Vvvvv..."</div>
+        <div class="drill-phonetic">Lip trill · Hum · Fricative buzz</div>
+      </div>
+      <div class="step-desc">Now do 20 seconds of lip trills — blow air through relaxed, vibrating lips. This warms your articulators without strain.</div>
+      <div class="nav-row">
+        <button class="btn-prev" onclick="closePractice()">✕ Exit</button>
+        <button class="btn-next" onclick="goStep(2)">Warmup Done →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Tongue twisters -->
+    <div class="exercise-step" id="step2">
+      <div class="step-tag">Step 2 of 4 — Precision Drill</div>
+      <div class="step-heading" id="s2heading">Consonant Crispness</div>
+      <div class="step-desc" id="s2desc">Speak each phrase slowly 3×, then at normal pace 3×, then quickly 3×. Exaggerate lip and tongue movement — feel each consonant snap.</div>
+      <div class="drill-box">
+        <div class="drill-text" id="s2phrase">"Red lorry, yellow lorry, red lorry, yellow lorry."</div>
+        <div class="drill-phonetic" id="s2focus">Focus: L · R distinction — tip of tongue</div>
+      </div>
+      <div style="text-align:center; margin: 16px 0 8px;">
+        <div style="font-size:0.78rem; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:8px;">TIME YOUR ROUND</div>
+        <div class="timer-display" id="timerDisp">0:30</div>
+        <button onclick="startTimer()" style="background:var(--cream);border:none;border-radius:100px;padding:10px 24px;cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;">▶ Start Timer</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-prev" onclick="goStep(1)">← Back</button>
+        <button class="btn-next" onclick="goStep(3)">Next Drill →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Vowel extension -->
+    <div class="exercise-step" id="step3">
+      <div class="step-tag">Step 3 of 4 — Vowel Extension</div>
+      <div class="step-heading">Resonance & Clarity</div>
+      <div class="step-desc">Sustain each vowel for 5 seconds on one breath, placing your hand on your cheeks. You should feel vibration. Open your mouth wide — vowels live in open space.</div>
+      <div class="drill-box">
+        <div class="drill-text">"AY — EE — AH — OH — OO"</div>
+        <div class="drill-phonetic">Forward placement · Open jaw · Feel the buzz</div>
+      </div>
+      <div class="step-desc">Then speak this phrase as slowly and clearly as you can, savoring every vowel: <em>"Around the rugged rock the ragged rascal ran."</em></div>
+      <div class="nav-row">
+        <button class="btn-prev" onclick="goStep(2)">← Back</button>
+        <button class="btn-next" onclick="goStep(4)">Final Step →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Cool-down / reading -->
+    <div class="exercise-step" id="step4">
+      <div class="step-tag">Step 4 of 4 — Applied Speech</div>
+      <div class="step-heading" id="s4heading">Read Aloud Challenge</div>
+      <div class="step-desc" id="s4desc">Read the passage below aloud with full intention. Speak at 75% of your normal speed. Exaggerate clarity without sounding robotic. Record yourself if possible — playback is powerful feedback.</div>
+      <div class="drill-box">
+        <div class="drill-text" id="s4passage" style="font-size:1rem;">"Whether the weather be fine or whether the weather be not — whether the weather be cold or whether the weather be hot — we'll weather the weather, whatever the weather, whether we like it or not."</div>
+        <div class="drill-phonetic">Rate · Rhythm · Clarity</div>
+      </div>
+      <div class="step-desc">Reflect: Which sounds felt unclear? Make a mental note to focus on them tomorrow.</div>
+      <div class="nav-row">
+        <button class="btn-prev" onclick="goStep(3)">← Back</button>
+        <button class="btn-next" onclick="completeDay()" style="background:var(--sage);color:white;">✓ Complete Day</button>
+      </div>
+    </div>
+
+    <!-- Complete -->
+    <div class="exercise-step" id="stepComplete">
+      <div class="complete-section">
+        <span class="complete-icon">🎙️</span>
+        <div class="xp-badge" id="xpBadge">Day 1 Complete!</div>
+        <div class="step-heading" style="margin-bottom:10px;">Excellent Work!</div>
+        <div class="step-desc">Your articulators are sharper than they were 20 minutes ago. Consistency compounds — come back tomorrow to keep building.</div>
+        <div style="margin-top:8px; padding:20px; background:var(--cream); border-radius:14px; text-align:left;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--amber);margin-bottom:8px;letter-spacing:0.1em;">TOMORROW'S PREVIEW</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;" id="nextDayTitle">—</div>
+          <div style="font-size:0.82rem;color:var(--muted);margin-top:4px;" id="nextDayFocus">—</div>
+        </div>
+        <button class="btn-next" onclick="closePractice()" style="margin-top:20px;width:100%;">Close Session</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── PRONUNCIATION DATA per day ───
+const pronunData = [
+  { // Day 1 - Warming the Voice
+    title: "Breath & Resonance Sounds",
+    intro: "Today we wake up the whole vocal system. These aren't just warm-up sounds — they're the foundation of every articulate word you'll ever speak.",
+    mouthSvg: "relax",
+    mouthTitle: "Relaxed Open Mouth",
+    mouthSteps: ["Let jaw hang heavy — no effort", "Lips soft, barely touching", "Tongue rests flat on the floor of your mouth", "Feel air flow freely over the tongue"],
+    sounds: [
+      { symbol:"H", word:"HAH", desc:"Open throat,\nno friction" },
+      { symbol:"M", word:"MMM", desc:"Lips sealed,\nbuzz in face" },
+      { symbol:"V", word:"VVV", desc:"Lip-to-teeth,\nfeel vibration" }
+    ],
+    examples: [
+      { word:"Hahhh", ipa:"hɑː", speak:"hahhh" },
+      { word:"Mmmm", ipa:"mː", speak:"mmmm" },
+      { word:"Hello", ipa:"həˈloʊ", speak:"hello" },
+      { word:"Velvet", ipa:"ˈvɛlvɪt", speak:"velvet" }
+    ]
+  },
+  { // Day 2 - Tip-of-Tongue
+    title: "Alveolar Sounds: L · N · D · T",
+    intro: "All four sounds are made at the same spot — the alveolar ridge, just behind your upper front teeth. Precision here transforms mumbled speech into crisp, confident articulation.",
+    mouthSvg: "alveolar",
+    mouthTitle: "Alveolar Ridge Contact",
+    mouthSteps: ["Tongue TIP touches the ridge behind upper teeth", "Not the blade — the very tip", "For L: sides of tongue drop, air flows around", "For T/D: full seal then sharp release"],
+    sounds: [
+      { symbol:"L", word:"LIGHT", desc:"Tip up, sides\ndrop for airflow" },
+      { symbol:"N", word:"NIGHT", desc:"Tip up, air\nthrough nose" },
+      { symbol:"T", word:"TAP", desc:"Sharp stop-\nrelease at ridge" },
+      { symbol:"D", word:"DAP", desc:"Voiced T —\nfeel the buzz" }
+    ],
+    examples: [
+      { word:"Lily", ipa:"ˈlɪli", speak:"lily" },
+      { word:"Needle", ipa:"ˈniːdəl", speak:"needle" },
+      { word:"Dental", ipa:"ˈdɛntəl", speak:"dental" },
+      { word:"Tunnel", ipa:"ˈtʌnəl", speak:"tunnel" }
+    ]
+  },
+  { // Day 3 - Lip Explosives
+    title: "Bilabial Stops: B · P",
+    intro: "B and P are made entirely at the lips. The only difference: P is voiceless (whispered pop) while B is voiced (buzzing pop). Feel your lips seal and burst.",
+    mouthSvg: "bilabial",
+    mouthTitle: "Bilabial Seal",
+    mouthSteps: ["Both lips press firmly together", "Build air pressure behind the seal", "Release with a sharp pop", "For P: feel a puff of air on your hand. For B: feel vibration in your throat"],
+    sounds: [
+      { symbol:"P", word:"POP", desc:"Voiceless burst —\npuff of air" },
+      { symbol:"B", word:"BOB", desc:"Voiced burst —\nthroat vibrates" }
+    ],
+    examples: [
+      { word:"Peter", ipa:"ˈpiːtər", speak:"Peter" },
+      { word:"Pepper", ipa:"ˈpɛpər", speak:"pepper" },
+      { word:"Bubble", ipa:"ˈbʌbəl", speak:"bubble" },
+      { word:"Bumble", ipa:"ˈbʌmbəl", speak:"bumble" }
+    ]
+  },
+  { // Day 4 - Fricatives
+    title: "Fricatives: F · V · TH",
+    intro: "Fricatives are made by squeezing air through a narrow gap, creating turbulence. No stopping — just controlled, hissing airflow through precise contact points.",
+    mouthSvg: "fricative",
+    mouthTitle: "Fricative Airflow",
+    mouthSteps: ["F/V: upper teeth gently rest on lower lip", "TH: tongue tip just between or behind teeth", "Blow a thin, continuous stream of air", "Feel the vibration for V and voiced TH"],
+    sounds: [
+      { symbol:"F", word:"FAN", desc:"Teeth on lip,\nvoiceless flow" },
+      { symbol:"V", word:"VAN", desc:"Teeth on lip,\nvoiced flow" },
+      { symbol:"θ", word:"THINK", desc:"Tongue tip at\nteeth, voiceless" },
+      { symbol:"ð", word:"THIS", desc:"Tongue tip at\nteeth, voiced" }
+    ],
+    examples: [
+      { word:"Feather", ipa:"ˈfɛðər", speak:"feather" },
+      { word:"Vivid", ipa:"ˈvɪvɪd", speak:"vivid" },
+      { word:"Thatch", ipa:"θætʃ", speak:"thatch" },
+      { word:"Father", ipa:"ˈfɑːðər", speak:"father" }
+    ]
+  },
+  { // Day 5 - Sibilants
+    title: "Sibilants: S · Z",
+    intro: "S and Z are high-frequency hissing sounds. The tongue groove channels air over the teeth. Position matters enormously — even 1mm changes the sound completely.",
+    mouthSvg: "sibilant",
+    mouthTitle: "S/Z Tongue Groove",
+    mouthSteps: ["Teeth almost closed (small gap)", "Tongue tip just behind lower front teeth", "Sides of tongue touch upper molars — create a groove", "Channel air through the groove toward teeth"],
+    sounds: [
+      { symbol:"S", word:"SEA", desc:"Voiceless hiss —\nprecise groove" },
+      { symbol:"Z", word:"ZOO", desc:"Voiced hiss —\nfeel the buzz" }
+    ],
+    examples: [
+      { word:"Seashore", ipa:"ˈsiːʃɔːr", speak:"seashore" },
+      { word:"Sizzle", ipa:"ˈsɪzəl", speak:"sizzle" },
+      { word:"Zealous", ipa:"ˈzɛləs", speak:"zealous" },
+      { word:"Session", ipa:"ˈsɛʃən", speak:"session" }
+    ]
+  },
+  { // Day 6 - SH and CH
+    title: "Post-Alveolars: SH · CH · ZH",
+    intro: "These sounds are made further back than S — lips round slightly, tongue bunches up behind the ridge. SH is a hush, CH adds a stop, ZH is the middle sound in 'measure'.",
+    mouthSvg: "postalveolar",
+    mouthTitle: "Rounded Post-Alveolar",
+    mouthSteps: ["Lips round and protrude slightly", "Tongue body raises toward the palate", "Air flows over the broad tongue surface", "CH = short T stop + SH release"],
+    sounds: [
+      { symbol:"ʃ", word:"SHIP", desc:"SH — rounded,\nbroad tongue" },
+      { symbol:"tʃ", word:"CHIP", desc:"CH — stop\nthen SH" },
+      { symbol:"ʒ", word:"MEASURE", desc:"ZH — voiced\nSH sound" }
+    ],
+    examples: [
+      { word:"Shell", ipa:"ʃɛl", speak:"shell" },
+      { word:"Choose", ipa:"tʃuːz", speak:"choose" },
+      { word:"Vision", ipa:"ˈvɪʒən", speak:"vision" },
+      { word:"Church", ipa:"tʃɜːrtʃ", speak:"church" }
+    ]
+  },
+  { // Day 7 - Week 1 Review
+    title: "Week 1 Sound Review",
+    intro: "You've covered lip sounds, tongue-tip sounds, fricatives, and sibilants. Today we review all of them. Listen carefully and feel the contrast between each sound family.",
+    mouthSvg: "relax",
+    mouthTitle: "Active Articulators",
+    mouthSteps: ["Lips active for B, P, M, F, V", "Tongue tip for L, N, T, D, S, Z", "Rounded lips for SH, CH", "Warm up all zones before drilling"],
+    sounds: [
+      { symbol:"L/R", word:"LORRY", desc:"Tongue tip\nvs. body" },
+      { symbol:"S/Z", word:"SEIZE", desc:"Voicing\ncontrast" },
+      { symbol:"ʃ/s", word:"SH/S", desc:"Placement\nshift back" }
+    ],
+    examples: [
+      { word:"Clarity", ipa:"ˈklærɪti", speak:"clarity" },
+      { word:"Precise", ipa:"prɪˈsaɪs", speak:"precise" },
+      { word:"Articulate", ipa:"ɑːrˈtɪkjʊlɪt", speak:"articulate" },
+      { word:"Fluency", ipa:"ˈfluːənsi", speak:"fluency" }
+    ]
+  },
+  { // Day 8 - Open Vowels
+    title: "Open Vowels: AH · OH · AW",
+    intro: "Vowels live in open space. The more you open your jaw and shape your mouth, the richer the vowel sound. Think of your mouth as a resonating chamber — the shape changes the color of sound.",
+    mouthSvg: "vowel",
+    mouthTitle: "Open Jaw Vowels",
+    mouthSteps: ["AH: jaw drops fully, tongue flat, lips relaxed", "OH: jaw slightly raised, lips round into an O shape", "AW: similar to OH but lips spread more, jaw open"],
+    sounds: [
+      { symbol:"ɑː", word:"FATHER", desc:"AH — fully\nopen jaw" },
+      { symbol:"oʊ", word:"BOAT", desc:"OH — rounded\nlips, mid-jaw" },
+      { symbol:"ɔː", word:"CAUGHT", desc:"AW — open\nrounded" }
+    ],
+    examples: [
+      { word:"Park", ipa:"pɑːrk", speak:"park" },
+      { word:"Brown", ipa:"braʊn", speak:"brown" },
+      { word:"Thought", ipa:"θɔːt", speak:"thought" },
+      { word:"Claw", ipa:"klɔː", speak:"claw" }
+    ]
+  },
+  { // Day 9 - R Challenge
+    title: "The American R: /r/",
+    intro: "The American R is one of the hardest sounds for non-native speakers. The tongue body raises, edges touch upper molars, and the tip never touches the roof of the mouth.",
+    mouthSvg: "rhotic",
+    mouthTitle: "Retroflex / Bunched R",
+    mouthSteps: ["Two approaches work: retroflex (tip curls back) OR bunched (tongue body raises)", "Sides of tongue press against upper back molars", "Lips may round slightly", "Key: the tip NEVER touches the palate"],
+    sounds: [
+      { symbol:"r", word:"RUN", desc:"Tongue up,\ntip free" },
+      { symbol:"ər", word:"BIRD", desc:"Vowel R —\ncentral tongue" },
+      { symbol:"ɑːr", word:"CAR", desc:"AR — open\nthen R" }
+    ],
+    examples: [
+      { word:"Rock", ipa:"rɑːk", speak:"rock" },
+      { word:"River", ipa:"ˈrɪvər", speak:"river" },
+      { word:"Barry", ipa:"ˈbæri", speak:"Barry" },
+      { word:"Further", ipa:"ˈfɜːrðər", speak:"further" }
+    ]
+  },
+  { // Day 10 - W and WH
+    title: "Labial-Velar: W · WH",
+    intro: "W starts with very rounded, protruded lips then glides immediately into the following vowel. It's a glide — there's no friction, just a smooth lip movement.",
+    mouthSvg: "labial",
+    mouthTitle: "Rounded Lip Glide",
+    mouthSteps: ["Round your lips into a tight O before speaking", "Back of tongue raises toward velum", "Glide immediately into the next vowel", "WH: a slight breath before the W in careful speech"],
+    sounds: [
+      { symbol:"w", word:"WET", desc:"Rounded lips\nglide forward" },
+      { symbol:"ʍ", word:"WHICH", desc:"Breathy W —\nWH distinction" }
+    ],
+    examples: [
+      { word:"Winter", ipa:"ˈwɪntər", speak:"winter" },
+      { word:"Wander", ipa:"ˈwɒndər", speak:"wander" },
+      { word:"Whimper", ipa:"ˈʍɪmpər", speak:"whimper" },
+      { word:"Whisper", ipa:"ˈʍɪspər", speak:"whisper" }
+    ]
+  },
+  { // Day 11 - Velars K G
+    title: "Velar Stops: K · G",
+    intro: "K and G are made at the very back of the mouth — the back of your tongue presses against the velum (soft palate). K pops clean, G rumbles deep.",
+    mouthSvg: "velar",
+    mouthTitle: "Velar Contact",
+    mouthSteps: ["Back of tongue rises and presses against soft palate", "Build pressure behind the seal", "Release with a back-of-mouth pop", "G is voiced — feel the vibration in your throat"],
+    sounds: [
+      { symbol:"k", word:"CAT", desc:"Voiceless velar\nstop, crisp pop" },
+      { symbol:"g", word:"GOT", desc:"Voiced velar\nstop, deep rumble" }
+    ],
+    examples: [
+      { word:"Cricket", ipa:"ˈkrɪkɪt", speak:"cricket" },
+      { word:"Gecko", ipa:"ˈgɛkoʊ", speak:"gecko" },
+      { word:"Kingdom", ipa:"ˈkɪŋdəm", speak:"kingdom" },
+      { word:"Giggle", ipa:"ˈgɪgəl", speak:"giggle" }
+    ]
+  },
+  { // Day 12 - Nasals
+    title: "Nasal Resonance: M · N · NG",
+    intro: "Nasal sounds are made by closing the mouth at different points and routing all air through the nose. Feel the buzzing vibration in your face — that's resonance you can use.",
+    mouthSvg: "nasal",
+    mouthTitle: "Nasal Passage Open",
+    mouthSteps: ["All three nasals: velum (soft palate) lowers to open nasal passage", "M: lips seal", "N: tongue tip seals at alveolar ridge", "NG: back tongue seals at velum — hum to feel it"],
+    sounds: [
+      { symbol:"m", word:"MOM", desc:"Lips sealed,\nbuzz in face" },
+      { symbol:"n", word:"NUN", desc:"Tip at ridge,\nbuzz in nose" },
+      { symbol:"ŋ", word:"SING", desc:"Back tongue up,\nhum it" }
+    ],
+    examples: [
+      { word:"Morning", ipa:"ˈmɔːrnɪŋ", speak:"morning" },
+      { word:"Meaning", ipa:"ˈmiːnɪŋ", speak:"meaning" },
+      { word:"Singing", ipa:"ˈsɪŋɪŋ", speak:"singing" },
+      { word:"Mango", ipa:"ˈmæŋgoʊ", speak:"mango" }
+    ]
+  },
+  { // Day 13 - Voiced vs Voiceless
+    title: "Voicing Pairs: Feel the Difference",
+    intro: "Every stop and fricative has a voiced/voiceless twin. Place your fingers on your throat — you'll feel vibration for voiced sounds (B, D, G, V, Z) and silence for voiceless (P, T, K, F, S).",
+    mouthSvg: "relax",
+    mouthTitle: "Voicing Check",
+    mouthSteps: ["Place two fingers gently on your larynx (Adam's apple)", "Say 'ZZZZ' — feel the buzz", "Switch to 'SSSS' — the buzz stops", "Your vocal cords vibrate for voiced, rest for voiceless"],
+    sounds: [
+      { symbol:"b/p", word:"BUY/PIE", desc:"Lips — voiced\nvs. voiceless" },
+      { symbol:"d/t", word:"DEN/TEN", desc:"Ridge — voiced\nvs. voiceless" },
+      { symbol:"g/k", word:"GOT/COT", desc:"Velum — voiced\nvs. voiceless" },
+      { symbol:"v/f", word:"VAN/FAN", desc:"Lip-teeth pair" }
+    ],
+    examples: [
+      { word:"Buy", ipa:"baɪ", speak:"buy" },
+      { word:"Pie", ipa:"paɪ", speak:"pie" },
+      { word:"Vine", ipa:"vaɪn", speak:"vine" },
+      { word:"Fine", ipa:"faɪn", speak:"fine" }
+    ]
+  },
+  { // Day 14 - Week 2 Review
+    title: "Week 2 Sound Review",
+    intro: "Week 2 covered the back of the mouth — open vowels, the R, W glides, and velars. Today review with attention to placement precision. Every sound has a home — find it.",
+    mouthSvg: "relax",
+    mouthTitle: "Full Mouth Activation",
+    mouthSteps: ["Front: lips active for W, bilabials", "Middle: tongue tip for alveolars", "Back: tongue body for R, velars", "Nasals weave through all positions"],
+    sounds: [
+      { symbol:"r", word:"RUN", desc:"Body raised,\ntip free" },
+      { symbol:"w", word:"WIN", desc:"Rounded lip\nglide" },
+      { symbol:"k/g", word:"KEY/GEE", desc:"Back stop\ncontrast" }
+    ],
+    examples: [
+      { word:"Wonderful", ipa:"ˈwʌndərfʊl", speak:"wonderful" },
+      { word:"Remarkable", ipa:"rɪˈmɑːrkəbəl", speak:"remarkable" },
+      { word:"Graceful", ipa:"ˈgreɪsfʊl", speak:"graceful" },
+      { word:"Correct", ipa:"kəˈrɛkt", speak:"correct" }
+    ]
+  },
+  { // Day 15 - Minimal Pairs Vowels
+    title: "Vowel Minimal Pairs",
+    intro: "Minimal pairs differ by just one sound. These vowel contrasts are what listeners use to tell words apart. Sloppy vowels create misunderstandings — precise vowels create clarity.",
+    mouthSvg: "vowel",
+    mouthTitle: "Vowel Jaw & Lip Position",
+    mouthSteps: ["High vowels (EE, OO): jaw nearly closed", "Low vowels (AH, AW): jaw drops fully", "Front vowels (EE, I): lips spread", "Back vowels (OO, OH): lips round"],
+    sounds: [
+      { symbol:"ɪ/iː", word:"BIT/BEAT", desc:"Short vs.\nlong high front" },
+      { symbol:"ʊ/uː", word:"PULL/POOL", desc:"Short vs.\nlong high back" },
+      { symbol:"ɑː/ɔː", word:"CAT/CAUGHT", desc:"Low front\nvs. back" }
+    ],
+    examples: [
+      { word:"Bid", ipa:"bɪd", speak:"bid" },
+      { word:"Bead", ipa:"biːd", speak:"bead" },
+      { word:"Pull", ipa:"pʊl", speak:"pull" },
+      { word:"Pool", ipa:"puːl", speak:"pool" }
+    ]
+  },
+  { // Day 16 - Rate Control Slow
+    title: "Phoneme Duration & Slow Rate",
+    intro: "Slowing down reveals where your articulation falls apart. Today you'll hold each sound slightly longer than normal — this builds precision and allows listeners time to process each word.",
+    mouthSvg: "relax",
+    mouthTitle: "Deliberate Movement",
+    mouthSteps: ["Move from sound to sound deliberately", "Feel each transition between phonemes", "Consonants get crisp — don't blur into vowels", "Pause slightly at phrase boundaries"],
+    sounds: [
+      { symbol:"—", word:"PAUSE", desc:"Silence is\narticulation too" },
+      { symbol:"·", word:"STRESS", desc:"Stressed syllables\nget more length" }
+    ],
+    examples: [
+      { word:"Slowly", ipa:"ˈsloʊli", speak:"slowly" },
+      { word:"Deliberate", ipa:"dɪˈlɪbərɪt", speak:"deliberate" },
+      { word:"Careful", ipa:"ˈkɛərfʊl", speak:"careful" },
+      { word:"Measured", ipa:"ˈmɛʒərd", speak:"measured" }
+    ]
+  },
+  { // Day 17 - Rate Control Fast
+    title: "Fluency at Speed: Coarticulation",
+    intro: "In fast speech, sounds blend into each other — this is coarticulation, and it's completely natural. The goal is fluid movement between sounds, not dropping them entirely.",
+    mouthSvg: "relax",
+    mouthTitle: "Smooth Transitions",
+    mouthSteps: ["Sounds influence each other at speed", "Final consonants carry into initial vowels: 'wrap it' → 'wra-pit'", "Keep consonant clusters clean: 'str', 'bl', 'cr'", "Speed without slur: every phoneme present, just brief"],
+    sounds: [
+      { symbol:"↗", word:"LINK", desc:"Sounds blend\nat boundaries" },
+      { symbol:"◉", word:"CLUSTER", desc:"Consonant groups\nstay tight" }
+    ],
+    examples: [
+      { word:"Rapidly", ipa:"ˈræpɪdli", speak:"rapidly" },
+      { word:"Fluently", ipa:"ˈfluːəntli", speak:"fluently" },
+      { word:"Brilliant", ipa:"ˈbrɪljənt", speak:"brilliant" },
+      { word:"Crispy", ipa:"ˈkrɪspi", speak:"crispy" }
+    ]
+  },
+  { // Day 18 - Stress & Emphasis
+    title: "Lexical Stress & Sentence Stress",
+    intro: "English is a stress-timed language. Stressed syllables are louder, longer, and higher in pitch. Wrong stress makes words unrecognizable — right stress makes speech natural and powerful.",
+    mouthSvg: "relax",
+    mouthTitle: "Stress = Length + Pitch + Volume",
+    mouthSteps: ["Stressed syllable: higher pitch, longer, slightly louder", "Unstressed: reduced to schwa /ə/ in many cases", "In sentences: content words stressed, function words reduced", "'I DIDN'T say SHE stole it' vs 'I didn't say she STOLE it'"],
+    sounds: [
+      { symbol:"ˈ", word:"PRIMARY", desc:"Primary stress\nmarker" },
+      { symbol:"ˌ", word:"SECONDARY", desc:"Secondary stress\nmarker" },
+      { symbol:"ə", word:"SCHWA", desc:"Unstressed vowel\nreduction" }
+    ],
+    examples: [
+      { word:"PREsent", ipa:"ˈprɛzənt (n.)", speak:"present" },
+      { word:"preSENT", ipa:"prɪˈzɛnt (v.)", speak:"present" },
+      { word:"REcord", ipa:"ˈrɛkərd (n.)", speak:"record" },
+      { word:"reCORD", ipa:"rɪˈkɔːrd (v.)", speak:"record" }
+    ]
+  },
+  { // Day 19 - Intonation
+    title: "Intonation: The Melody of Speech",
+    intro: "Intonation is your voice rising and falling in pitch across sentences. It signals statements, questions, emotion, and intent. Flat intonation sounds robotic — varied intonation sounds human.",
+    mouthSvg: "relax",
+    mouthTitle: "Pitch Movement",
+    mouthSteps: ["Statements: pitch falls at the end ↘", "Yes/No questions: pitch rises at the end ↗", "Wh-questions: often fall at the end ↘", "Lists: rise on each item, fall on the last ↗ ↗ ↗ ↘"],
+    sounds: [
+      { symbol:"↘", word:"STATEMENT", desc:"Falling tone —\nfinal, certain" },
+      { symbol:"↗", word:"QUESTION", desc:"Rising tone —\nopen, asking" },
+      { symbol:"↗↘", word:"LISTING", desc:"Rise then fall\nat list end" }
+    ],
+    examples: [
+      { word:"Is it true?", ipa:"↗ rising", speak:"Is it true?" },
+      { word:"It is true.", ipa:"↘ falling", speak:"It is true." },
+      { word:"Really!", ipa:"↗↘ fall-rise", speak:"Really!" },
+      { word:"I see.", ipa:"↘ closure", speak:"I see." }
+    ]
+  },
+  { // Day 20 - Plosive Clusters
+    title: "Consonant Clusters: TR · DR · BL · CR",
+    intro: "Consonant clusters demand that your articulators move from one position to the next without inserting a vowel between them. The transition IS the sound.",
+    mouthSvg: "alveolar",
+    mouthTitle: "Cluster Transitions",
+    mouthSteps: ["TR: T at ridge, immediately flap to R position — no schwa between!", "DR: voiced T (D) then R — lips round mid-transition", "BL: lip seal for B, release into lateral L", "CR: velar K release into retroflex R"],
+    sounds: [
+      { symbol:"tr", word:"TREE", desc:"T → R, no\nvowel between" },
+      { symbol:"dr", word:"DRUM", desc:"D → R, lips\nround early" },
+      { symbol:"bl", word:"BLUE", desc:"B release\ninto lateral" },
+      { symbol:"gr", word:"GROW", desc:"Velar into\nrhotic glide" }
+    ],
+    examples: [
+      { word:"Tree", ipa:"triː", speak:"tree" },
+      { word:"Drum", ipa:"drʌm", speak:"drum" },
+      { word:"Brave", ipa:"breɪv", speak:"brave" },
+      { word:"Crisp", ipa:"krɪsp", speak:"crisp" }
+    ]
+  },
+  { // Day 21 - Week 3 Review
+    title: "Week 3 Full Circuit Review",
+    intro: "Weeks 1–3 have built your phoneme library, rate control, stress, and intonation. Today ties it all together. Every sound family, every technique — one connected performance.",
+    mouthSvg: "relax",
+    mouthTitle: "Integrated Articulation",
+    mouthSteps: ["Front-to-back tongue awareness", "Rate: slow for hard sounds, fluid for known ones", "Stress and intonation color every phrase", "Breath supports it all — don't forget the foundation"],
+    sounds: [
+      { symbol:"↑↓", word:"PITCH", desc:"Intonation\nthrough phrases" },
+      { symbol:"ˈ", word:"STRESS", desc:"Every word has\none stressed beat" },
+      { symbol:"∿", word:"FLOW", desc:"Coarticulation\nkeeps it smooth" }
+    ],
+    examples: [
+      { word:"Articulate", ipa:"ɑːrˈtɪkjʊlɪt", speak:"articulate" },
+      { word:"Pronunciation", ipa:"prəˌnʌnsiˈeɪʃən", speak:"pronunciation" },
+      { word:"Enunciation", ipa:"ɪˌnʌnsiˈeɪʃən", speak:"enunciation" },
+      { word:"Expression", ipa:"ɪkˈsprɛʃən", speak:"expression" }
+    ]
+  },
+  { // Day 22 - Voice Projection
+    title: "Resonance & Projection",
+    intro: "Projection is NOT shouting. It's about placing your voice in the resonating chambers of your skull — chest, mouth, sinuses — so sound travels further with less effort.",
+    mouthSvg: "relax",
+    mouthTitle: "Resonance Placement",
+    mouthSteps: ["Chest resonance: feel vibration in sternum on low notes", "Mouth resonance: keep an open, forward oral cavity", "Sinus/head resonance: feel buzz in cheekbones on bright vowels", "Forward placement: imagine the sound landing on your lips, not your throat"],
+    sounds: [
+      { symbol:"◎", word:"CHEST", desc:"Low, warm,\nfull resonance" },
+      { symbol:"◉", word:"MOUTH", desc:"Mid, bright,\nforward placement" },
+      { symbol:"⊙", word:"HEAD", desc:"High, bright,\nsinus buzz" }
+    ],
+    examples: [
+      { word:"Project", ipa:"ˈprɒdʒɛkt", speak:"project" },
+      { word:"Resonate", ipa:"ˈrɛzəneɪt", speak:"resonate" },
+      { word:"Carry", ipa:"ˈkæri", speak:"carry" },
+      { word:"Broadcast", ipa:"ˈbrɔːdkæst", speak:"broadcast" }
+    ]
+  },
+  { // Day 23 - Articulation in Context
+    title: "Connected Speech: Linking & Reduction",
+    intro: "In real conversation, words don't stay separate — they link together. Understanding these patterns helps you speak more naturally AND understand others better.",
+    mouthSvg: "relax",
+    mouthTitle: "Connected Speech Patterns",
+    mouthSteps: ["Consonant-vowel linking: 'turn it' → 'tur-nit'", "Gemination: 'black cat' → 'bla-kcat' (one long stop)", "Function word reduction: 'and' → ən, 'to' → tə", "But: in deliberate formal speech, separate words more clearly"],
+    sounds: [
+      { symbol:"‿", word:"LINKING", desc:"Words join\nat boundaries" },
+      { symbol:"ə", word:"REDUCTION", desc:"Function words\ngo to schwa" }
+    ],
+    examples: [
+      { word:"Turn on", ipa:"ˈtɜːr nɒn", speak:"turn on" },
+      { word:"Pick up", ipa:"ˈpɪk ʌp", speak:"pick up" },
+      { word:"Going to", ipa:"ˈgəʊɪŋ tə", speak:"going to" },
+      { word:"Kind of", ipa:"ˈkaɪnd əv", speak:"kind of" }
+    ]
+  },
+  { // Day 24 - TH Blends
+    title: "TH Clusters: voiced and voiceless",
+    intro: "TH is one of the rarest sounds across world languages — most learners substitute T, D, S, or F. Mastering both TH sounds marks you instantly as a precise, careful speaker.",
+    mouthSvg: "fricative",
+    mouthTitle: "Interdental TH",
+    mouthSteps: ["Tongue tip protrudes between the teeth (or just behind them)", "Voiceless TH: blow air over the tongue — THINK, THIN, THREE", "Voiced TH: same but add vocal vibration — THIS, THOSE, THEM", "Never substitute T, D, or S — the tongue must reach the teeth"],
+    sounds: [
+      { symbol:"θ", word:"THINK", desc:"Voiceless TH —\ntongue at teeth" },
+      { symbol:"ð", word:"THIS", desc:"Voiced TH —\nvibration added" }
+    ],
+    examples: [
+      { word:"Think", ipa:"θɪŋk", speak:"think" },
+      { word:"Three", ipa:"θriː", speak:"three" },
+      { word:"This", ipa:"ðɪs", speak:"this" },
+      { word:"Breathe", ipa:"briːð", speak:"breathe" }
+    ]
+  },
+  { // Day 25 - Resonance Mastery
+    title: "Full Resonance Integration",
+    intro: "Great voices vibrate in multiple chambers simultaneously. Today you'll feel chest, mouth, and head resonance as one unified, forward-placed sound — the hallmark of a commanding speaker.",
+    mouthSvg: "relax",
+    mouthTitle: "Three-Chamber Resonance",
+    mouthSteps: ["Start with a low HUM — feel chest buzz", "Raise pitch slightly — buzz moves to mouth and cheeks", "Go higher — feel it in your sinuses and forehead", "Hold all three simultaneously on a sustained AH"],
+    sounds: [
+      { symbol:"m→", word:"HUM → AH", desc:"Hum into open\nvowel — feel shift" },
+      { symbol:"v→", word:"VVV → AH", desc:"Fricative into\nvowel placement" }
+    ],
+    examples: [
+      { word:"Warm", ipa:"wɔːrm", speak:"warm" },
+      { word:"Vibrant", ipa:"ˈvaɪbrənt", speak:"vibrant" },
+      { word:"Resound", ipa:"rɪˈzaʊnd", speak:"resound" },
+      { word:"Resonant", ipa:"ˈrɛzənənt", speak:"resonant" }
+    ]
+  },
+  { // Day 26 - Articulation + Emotion
+    title: "Emotional Coloring of Speech",
+    intro: "Emotion changes the physical behavior of your articulators. Fear tightens the jaw. Joy opens the mouth. Confidence steadies the breath. Today you learn to maintain clarity through all of them.",
+    mouthSvg: "relax",
+    mouthTitle: "Emotion Affects Articulators",
+    mouthSteps: ["Joy: raised cheeks, open jaw, higher pitch — keep consonants crisp", "Sadness: slower rate, lower pitch, softer consonants — maintain clarity", "Anger: tension wants to creep in — consciously release jaw", "Confidence: full breath, forward placement, firm consonants"],
+    sounds: [
+      { symbol:"😊", word:"JOY", desc:"Open, bright,\nforward" },
+      { symbol:"😤", word:"FIRM", desc:"Steady breath,\nclear stops" },
+      { symbol:"😢", word:"TENDER", desc:"Soft, slow,\nstill clear" }
+    ],
+    examples: [
+      { word:"Wonderful!", ipa:"ˈwʌndərfʊl", speak:"wonderful" },
+      { word:"Unacceptable.", ipa:"ˌʌnəkˈsɛptəbəl", speak:"unacceptable" },
+      { word:"I understand.", ipa:"aɪ ˌʌndərˈstænd", speak:"I understand" },
+      { word:"Absolutely.", ipa:"ˈæbsəluːtli", speak:"absolutely" }
+    ]
+  },
+  { // Day 27 - Spontaneous Speech
+    title: "Real-Time Articulation",
+    intro: "Today's challenge: maintain all your learned precision in unscripted, spontaneous speech. This is where habits become automatic. Trust your training — your muscle memory is ready.",
+    mouthSvg: "relax",
+    mouthTitle: "Automatic Precision",
+    mouthSteps: ["Breath before you speak — not during", "Let consonants be crisp without thinking about them", "If you stumble, pause and reset — don't rush through errors", "Speak to the end of each sentence before inhaling"],
+    sounds: [
+      { symbol:"⟳", word:"HABIT", desc:"28 days builds\nautomatic skill" },
+      { symbol:"◎", word:"BREATH", desc:"Breath first,\nthen speak" }
+    ],
+    examples: [
+      { word:"Spontaneous", ipa:"spɒnˈteɪniəs", speak:"spontaneous" },
+      { word:"Effortless", ipa:"ˈɛfətlɪs", speak:"effortless" },
+      { word:"Natural", ipa:"ˈnætʃərəl", speak:"natural" },
+      { word:"Automatic", ipa:"ˌɔːtəˈmætɪk", speak:"automatic" }
+    ]
+  },
+  { // Day 28 - Showcase
+    title: "The Articulate Speaker",
+    intro: "You've completed 28 days. Your articulators are stronger, more precise, and more expressive than when you started. Today's session is not practice — it's performance.",
+    mouthSvg: "relax",
+    mouthTitle: "Mastery",
+    mouthSteps: ["All sounds are available to you", "Rate, stress, and intonation are under your control", "Resonance carries your voice forward with ease", "You are an articulate speaker — speak like one"],
+    sounds: [
+      { symbol:"★", word:"MASTERY", desc:"All 28 sounds\nintegrated" },
+      { symbol:"🎙", word:"PERFORM", desc:"Speak with\nfull intention" }
+    ],
+    examples: [
+      { word:"Excellence", ipa:"ˈɛksələns", speak:"excellence" },
+      { word:"Mastery", ipa:"ˈmæstəri", speak:"mastery" },
+      { word:"Articulate", ipa:"ɑːrˈtɪkjʊlɪt", speak:"articulate" },
+      { word:"Brilliant", ipa:"ˈbrɪljənt", speak:"brilliant" }
+    ]
+  }
+];
+
+// SVG mouth diagrams
+function getMouthSVG(type) {
+  const svgs = {
+    relax: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 28 44 Q 50 58 72 44" fill="none" stroke="#c8853a" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="36" cy="36" rx="5" ry="3" fill="rgba(245,240,232,0.15)"/>
+      <ellipse cx="64" cy="36" rx="5" ry="3" fill="rgba(245,240,232,0.15)"/>
+      <path d="M 35 50 Q 50 60 65 50" fill="rgba(180,80,50,0.3)" stroke="none"/>
+      <rect x="38" y="50" width="24" height="6" rx="2" fill="rgba(245,240,232,0.2)"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">relaxed</text>
+    </svg>`,
+    alveolar: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 30 42 Q 50 36 70 42" fill="none" stroke="rgba(245,240,232,0.3)" stroke-width="1"/>
+      <circle cx="50" cy="34" r="4" fill="rgba(200,133,58,0.6)" />
+      <line x1="50" y1="38" x2="50" y2="50" stroke="#c8853a" stroke-width="2"/>
+      <path d="M 35 50 Q 50 46 65 50" fill="rgba(180,80,50,0.4)" stroke="#c8853a" stroke-width="1"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">tip↑ ridge</text>
+    </svg>`,
+    bilabial: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 30 42 Q 50 38 70 42" fill="rgba(200,133,58,0.5)" stroke="#c8853a" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 30 48 Q 50 52 70 48" fill="rgba(200,133,58,0.5)" stroke="#c8853a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">lips sealed</text>
+    </svg>`,
+    fricative: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 30 44 Q 50 40 70 44" fill="none" stroke="rgba(245,240,232,0.3)" stroke-width="1"/>
+      <line x1="38" y1="40" x2="62" y2="40" stroke="#c8853a" stroke-width="2" stroke-dasharray="3,3"/>
+      <path d="M 62 40 Q 68 40 70 44" fill="none" stroke="rgba(200,133,58,0.6)" stroke-width="2"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">air→teeth</text>
+    </svg>`,
+    sibilant: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 36 45 Q 50 42 64 45" fill="rgba(180,80,50,0.3)" stroke="#c8853a" stroke-width="1.5"/>
+      <path d="M 40 48 Q 50 44 60 48" fill="none" stroke="rgba(200,133,58,0.8)" stroke-width="1.5" stroke-dasharray="2,2"/>
+      <line x1="46" y1="36" x2="54" y2="36" stroke="rgba(245,240,232,0.4)" stroke-width="2"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">groove→gap</text>
+    </svg>`,
+    postalveolar: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 32 44 Q 50 36 68 44" fill="none" stroke="rgba(245,240,232,0.3)" stroke-width="1"/>
+      <ellipse cx="50" cy="38" rx="8" ry="5" fill="rgba(200,133,58,0.4)" stroke="#c8853a" stroke-width="1.5"/>
+      <path d="M 34 46 Q 50 48 66 46" fill="rgba(200,133,58,0.3)" stroke="#c8853a" stroke-width="1.5"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">lips round↑</text>
+    </svg>`,
+    rhotic: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 36 48 Q 44 36 50 42 Q 56 48 64 36" fill="none" stroke="#c8853a" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="50" cy="42" r="3" fill="rgba(200,133,58,0.5)"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">body↑ tip free</text>
+    </svg>`,
+    labial: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <ellipse cx="50" cy="44" rx="16" ry="10" fill="none" stroke="#c8853a" stroke-width="2.5"/>
+      <ellipse cx="50" cy="44" rx="8" ry="5" fill="rgba(200,133,58,0.3)"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">lips round O</text>
+    </svg>`,
+    velar: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 36 50 Q 50 30 64 50" fill="rgba(200,133,58,0.3)" stroke="#c8853a" stroke-width="2"/>
+      <circle cx="56" cy="36" r="5" fill="rgba(200,133,58,0.6)"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">back↑ velum</text>
+    </svg>`,
+    nasal: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 34 42 Q 50 42 66 42" fill="none" stroke="rgba(245,240,232,0.3)" stroke-width="1"/>
+      <path d="M 40 30 Q 50 20 60 30" fill="none" stroke="#c8853a" stroke-width="2" stroke-dasharray="3,2"/>
+      <path d="M 42 20 L 42 28 M 50 17 L 50 26 M 58 20 L 58 28" stroke="rgba(200,133,58,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">air→nose↑</text>
+    </svg>`,
+    vowel: `<svg width="100" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="40" rx="38" ry="28" fill="none" stroke="rgba(200,133,58,0.4)" stroke-width="1.5"/>
+      <path d="M 28 36 Q 50 60 72 36" fill="none" stroke="#c8853a" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="30" cy="38" r="3" fill="rgba(200,133,58,0.7)"/>
+      <text x="30" y="30" fill="rgba(200,133,58,0.8)" font-size="7" font-family="DM Mono">EE</text>
+      <circle cx="70" cy="38" r="3" fill="rgba(200,133,58,0.4)"/>
+      <text x="63" y="30" fill="rgba(200,133,58,0.8)" font-size="7" font-family="DM Mono">OO</text>
+      <circle cx="50" cy="58" r="3" fill="rgba(200,133,58,0.6)"/>
+      <text x="44" y="70" fill="rgba(200,133,58,0.8)" font-size="7" font-family="DM Mono">AH</text>
+      <text x="50" y="75" text-anchor="middle" fill="rgba(200,133,58,0.7)" font-size="8" font-family="DM Mono">vowel space</text>
+    </svg>`
+  };
+  return svgs[type] || svgs.relax;
+}
+
+// ─── DATA ───
+const days = [
+  { theme:"Warming the Voice", focus:"Lip trills, breath release, gentle humming to wake up articulators.", twist:"Red lorry, yellow lorry.", passage:"Whether the weather be fine, whether the weather be not." },
+  { theme:"Tip-of-Tongue Precision", focus:"L, N, D, T sounds — tongue tip touching the alveolar ridge with precision.", twist:"Lily loves lollipops, lollipops love Lily.", passage:"Little Tommy Tucker sings for his supper — what shall we give him? White bread and butter." },
+  { theme:"Lip Explosives", focus:"B and P pops. Feel the burst of air with each bilabial stop.", twist:"Peter Piper picked a peck of pickled peppers.", passage:"The boy blew his big brass bugle boldly before the band began." },
+  { theme:"Fricative Flow", focus:"F, V, TH — air flowing through narrow channels. No tension.", twist:"Five fine fresh fish for five fat friars.", passage:"This is the feather that flew into the father's field by the farm." },
+  { theme:"Sibilant Sharpness", focus:"S and Z sounds — crisp, forward, without a lisp.", twist:"She sells seashells by the seashore.", passage:"Seven sleek silver swans swam silently southward." },
+  { theme:"SH and CH Mastery", focus:"Differentiate SH, CH, and ZH. Shape your mouth deliberately for each.", twist:"She should share her shoes, she should.", passage:"Charles chose chips and cheese, which Charlie charged at the shop." },
+  { theme:"Week 1 Review", focus:"Combine all week's sounds in one confident, expressive review session.", twist:"Real rock wall, real rock wall, real rock wall.", passage:"A proper copper coffee pot. A proper copper coffee pot. Repeat with perfect clarity." },
+  { theme:"Jaw Release & Open Vowels", focus:"Drop your jaw. Big open vowels: AH, OH, AW. Space inside your mouth matters.", twist:"How now brown cow — how now?", passage:"The dark bark of the large park marks the start of a vast, calm heart." },
+  { theme:"The R Challenge", focus:"American R — tongue body raised, sides touching upper molars. No exaggeration.", twist:"Round and round the rugged rock the ragged rascal ran.", passage:"Barry borrowed Barry's barrel — but Barry's barrel was narrow." },
+  { theme:"W and WH Sounds", focus:"Rounded lips, air through the lips — keep W's soft and WH's breathy.", twist:"Wendy the witch went west with a white whippet.", passage:"Where would we wander if winter winds weren't whipping westward?" },
+  { theme:"Velars: K & G", focus:"Back of tongue touches velum. Crisp K pops. Warm G sounds.", twist:"A quick kick from a cricket — a quick kick from a cricket.", passage:"The graceful gull glided over the great grey cliff and called across the gulf." },
+  { theme:"M, N, NG Resonance", focus:"Feel buzz in face for M. N at tooth ridge. NG in the throat. Rich nasal resonance.", twist:"Many men, many, many, many men — morning is merry.", passage:"Morning brings new meaning, moving mountains in the mind." },
+  { theme:"Voiced vs. Voiceless", focus:"B/P, D/T, G/K pairs. Touch your throat to feel the voicing switch.", twist:"Big and small, pick and ball, dark and tall.", passage:"The cat crept closer, the cub curled quietly, the cod drifted darkly." },
+  { theme:"Week 2 Review", focus:"Speed variation: whisper it, say it soft, say it full, say it large.", twist:"Three free throws, free throws three, three free throws.", passage:"Speak clearly, slowly, powerfully — clarity is the currency of trust." },
+  { theme:"Minimal Pairs — Vowels", focus:"AH/AW, I/EE, U/OO — tiny vowel differences, huge meaning changes.", twist:"Bid — bead, fill — feel, pull — pool. Contrast clearly.", passage:"He hit the fleet fleet feet. She sold six sick sheep." },
+  { theme:"Rate Control — Slow Down", focus:"Record yourself. Aim for 80 words per minute for today only. Savor each word.", twist:"Say each word as if it costs money.", passage:"Slow speech is not weak speech. Slow speech is strong speech. Every word lands." },
+  { theme:"Rate Control — Build Speed", focus:"Now go fast — but never lose clarity. Speed with control, not speed with blur.", twist:"Rubber baby buggy bumpers — faster each round.", passage:"She had a rapid, rather rapid, remarkably rapid rate of reading." },
+  { theme:"Stress & Emphasis", focus:"Shift stress to change meaning: I didn't say she took it. Which word you stress changes everything.", twist:"Say 'I did not say she stole it' — stress each word in turn.", passage:"The best speakers know that emphasis is the architect of meaning." },
+  { theme:"Sentence Melody — Intonation", focus:"Statements fall. Questions rise. Exclamations surge. Feel the musical arc.", twist:"Is that true? It's true! It might be true. I think it's true.", passage:"She asked if it would rain. He said it wouldn't. It did." },
+  { theme:"Plosives in Clusters", focus:"TR, DR, BL, GL, CR, GR clusters. No vowel sneaking between consonants.", twist:"The brim of the brave drummer's drum broke briskly.", passage:"Greet each crisp, brave day with the tread of a true dreamer." },
+  { theme:"Week 3 Review", focus:"Full exercise circuit from all 3 weeks. Give it your best round yet.", twist:"Mix and match your favorite twister from weeks 1–3.", passage:"Choose a paragraph from any book. Read it with full precision and intention." },
+  { theme:"Voice Projection", focus:"Project to the back wall. No shouting — resonance, not volume. Feel it bounce.", twist:"Call across the room: 'Betty bought butter but butter was bitter!'", passage:"A speaker who cannot be heard cannot be believed. Project with purpose." },
+  { theme:"Articulation in Context", focus:"Real conversation practice. Speak with full enunciation in a real or imagined dialogue.", twist:"Introduce yourself — full name, city, job — with perfect clarity.", passage:"Tell someone (real or imaginary) about your day using everything you've practiced." },
+  { theme:"Difficult Consonant Combos", focus:"TH blends: thinks, throws, thrills, thrones. Both voiced and voiceless TH.", twist:"Three thrushes threw thirty thickets thoroughly through the thatch.", passage:"The thought of thousands throughout the earth thoroughly thrills the thoughtful scholar." },
+  { theme:"Resonance Mastery", focus:"Feel your chest, mouth, and head all vibrating together. Mmmm buzz into AH into OH.", twist:"Ming-ming-ming, mong-mong-mong, mung-mung-mung. Feel the shift.", passage:"The full voice carries warmth. The warm voice carries trust. The trusted voice carries the world." },
+  { theme:"Articulation + Emotion", focus:"Speak the same sentence: sad, angry, joyful, nervous, confident. Feel how clarity shifts with emotion.", twist:"'I can't believe you did that.' Say it five ways with five feelings.", passage:"Emotion is the engine of connection. Your articulation is the steering wheel." },
+  { theme:"Spontaneous Speech", focus:"Your hardest challenge: speak for 60 seconds on any topic with zero preparation — maximum clarity.", twist:"Set a timer. Speak about your morning. Don't stop. Stay clear.", passage:"The goal of practice is presence. Speak in this moment, for this moment." },
+  { theme:"Day 28 — The Showcase", focus:"You've built 28 days of muscle memory. Today, speak something that matters to you — a toast, a story, a passage — with full mastery.", twist:"Your own words. Your own tongue. Your own voice.", passage:"Speak from the heart, with the craft you've earned. You are an articulate speaker." },
+];
+
+// ─── STATE ───
+let currentDay = 1;
+let completedDays = new Set();
+let streak = 0;
+
+function loadState() {
+  const saved = localStorage.getItem('articulateState');
+  if (saved) {
+    const s = JSON.parse(saved);
+    currentDay = s.currentDay || 1;
+    completedDays = new Set(s.completedDays || []);
+    streak = s.streak || 0;
+  }
+}
+function saveState() {
+  localStorage.setItem('articulateState', JSON.stringify({
+    currentDay, completedDays: [...completedDays], streak
+  }));
+}
+
+// ─── RENDER ───
+function renderHero() {
+  const d = days[currentDay - 1];
+  document.getElementById('headerDay').textContent = currentDay;
+  document.getElementById('heroTitle').textContent = d.theme;
+  document.getElementById('heroFocus').textContent = d.focus;
+}
+
+function renderStreak() {
+  document.getElementById('streakNum').textContent = streak;
+  const dots = document.getElementById('streakDots');
+  dots.innerHTML = '';
+  for (let i = 0; i < 7; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i < streak ? ' filled' : '');
+    dots.appendChild(dot);
+  }
+}
+
+function renderCalendar() {
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
+  for (let i = 1; i <= 28; i++) {
+    const d = days[i - 1];
+    const div = document.createElement('div');
+    div.className = 'cal-day';
+    if (completedDays.has(i)) div.classList.add('done');
+    else if (i === currentDay) div.classList.add('today');
+    else if (i > currentDay) div.classList.add('locked');
+
+    div.innerHTML = `<span class="day-num-cal">${i}</span><span class="day-theme-cal">${d.theme}</span>`;
+
+    if (!div.classList.contains('locked')) {
+      div.onclick = () => openPracticeForDay(i);
+    }
+    cal.appendChild(div);
+  }
+}
+
+// ─── MODAL ───
+let currentStep = 1;
+let timerInterval = null;
+let timerSec = 30;
+let activeDay = 1;
+
+function openPractice() { openPracticeForDay(currentDay); }
+
+let currentSpeech = null;
+
+function speakText(text, btn) {
+  if (!('speechSynthesis' in window)) { alert('Your browser does not support speech synthesis.'); return; }
+  window.speechSynthesis.cancel();
+  if (btn && btn.classList.contains('speaking')) { btn.classList.remove('speaking'); btn.textContent = '▶ Play Example'; return; }
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.rate = 0.78;
+  utt.pitch = 1.0;
+  utt.lang = 'en-US';
+  if (btn) { btn.classList.add('speaking'); btn.textContent = '■ Stop'; }
+  utt.onend = () => { if (btn) { btn.classList.remove('speaking'); btn.textContent = '▶ Play Example'; } };
+  utt.onerror = () => { if (btn) { btn.classList.remove('speaking'); btn.textContent = '▶ Play Example'; } };
+  window.speechSynthesis.speak(utt);
+}
+
+function speakPhrase() {
+  const btn = document.getElementById('ttsBtn');
+  const d = days[activeDay - 1];
+  speakText(d.twist, btn);
+}
+
+function speakWord(word, tileEl) {
+  document.querySelectorAll('.sound-tile, .word-ex').forEach(t => t.classList.remove('playing'));
+  if (tileEl) tileEl.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(word);
+  utt.rate = 0.75;
+  utt.lang = 'en-US';
+  utt.onend = () => { if (tileEl) tileEl.classList.remove('playing'); };
+  window.speechSynthesis.speak(utt);
+}
+
+function renderPronunGuide(dayNum) {
+  const p = pronunData[dayNum - 1];
+  if (!p) return;
+
+  document.getElementById('s0heading').textContent = p.title;
+  document.getElementById('s0intro').textContent = p.intro;
+
+  // Mouth SVG
+  document.getElementById('s0svgWrap').innerHTML = getMouthSVG(p.mouthSvg);
+  const inst = document.getElementById('s0mouthInstructions');
+  inst.innerHTML = `<strong>${p.mouthTitle}</strong><ul>${p.mouthSteps.map(s => `<li>${s}</li>`).join('')}</ul>`;
+
+  // Sound tiles
+  const grid = document.getElementById('s0soundsGrid');
+  grid.innerHTML = '';
+  p.sounds.forEach(s => {
+    const tile = document.createElement('div');
+    tile.className = 'sound-tile';
+    tile.innerHTML = `<div class="ipa-symbol">${s.symbol}</div><div class="ipa-word">${s.word}</div><div class="ipa-desc">${s.desc}</div><div class="speak-icon">▶</div>`;
+    tile.onclick = () => speakWord(s.word, tile);
+    grid.appendChild(tile);
+  });
+
+  // Word examples
+  const ex = document.getElementById('s0wordExamples');
+  ex.innerHTML = '';
+  p.examples.forEach(e => {
+    const btn = document.createElement('div');
+    btn.className = 'word-ex';
+    btn.innerHTML = `<div class="play-dot">▶</div><span>${e.word}</span><span class="word-ipa">/${e.ipa}/</span>`;
+    btn.onclick = () => speakWord(e.speak, btn);
+    ex.appendChild(btn);
+  });
+}
+
+function openPracticeForDay(dayNum) {
+  activeDay = dayNum;
+  const d = days[dayNum - 1];
+  document.getElementById('s2heading').textContent = d.theme;
+  document.getElementById('s2desc').textContent = d.focus;
+  document.getElementById('s2phrase').textContent = '"' + d.twist + '"';
+  document.getElementById('s4passage').textContent = '"' + d.passage + '"';
+
+  // next day preview
+  const next = days[dayNum] || null;
+  document.getElementById('nextDayTitle').textContent = next ? `Day ${dayNum+1}: ${next.theme}` : 'Program Complete! 🎉';
+  document.getElementById('nextDayFocus').textContent = next ? next.focus : 'You\'ve mastered all 28 days.';
+  document.getElementById('xpBadge').textContent = `Day ${dayNum} Complete!`;
+
+  renderPronunGuide(dayNum);
+  goStep(0);
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closePractice() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  clearInterval(timerInterval);
+  timerInterval = null;
+  window.speechSynthesis && window.speechSynthesis.cancel();
+}
+
+function goStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.exercise-step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('step' + n);
+  if (el) el.classList.add('active');
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerSec = 30;
+  const td = document.getElementById('timerDisp');
+  if (td) td.textContent = '0:30';
+}
+
+function startTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; timerSec = 30; document.getElementById('timerDisp').textContent = '0:30'; return; }
+  timerInterval = setInterval(() => {
+    timerSec--;
+    const m = Math.floor(timerSec / 60);
+    const s = timerSec % 60;
+    document.getElementById('timerDisp').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    if (timerSec <= 0) { clearInterval(timerInterval); timerInterval = null; document.getElementById('timerDisp').textContent = 'Done!'; }
+  }, 1000);
+}
+
+function completeDay() {
+  completedDays.add(activeDay);
+  if (activeDay === currentDay) {
+    streak++;
+    if (currentDay < 28) currentDay++;
+  }
+  saveState();
+  renderHero();
+  renderStreak();
+  renderCalendar();
+  document.querySelectorAll('.exercise-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('stepComplete').classList.add('active');
+}
+
+// ─── AUTH SYSTEM ───
+
+const USERS_KEY = 'articulateUsers';
+const SESSION_KEY = 'articulateSession';
+const ADMIN_EMAIL = 'admin@articulate.app'; // first registered user OR this email gets admin
+
+function getUsers() {
+  try { return JSON.parse(localStorage.getItem(USERS_KEY)) || []; } catch { return []; }
+}
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; }
+}
+function setSession(user) {
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: user.email, name: user.name, role: user.role, loginTime: Date.now() }));
+}
+function clearSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
+// Simple hash (not cryptographic — for demo; in production use bcrypt server-side)
+async function hashPassword(pw) {
+  const enc = new TextEncoder().encode(pw + 'articulate_salt_2024');
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function switchTab(tab) {
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('registerError').textContent = '';
+}
+
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+function checkStrength(pw) {
+  const fill = document.getElementById('strengthFill');
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  const pct = (score / 4) * 100;
+  const colors = ['#b04030','#c8853a','#d4a840','#6b7c6a'];
+  fill.style.width = pct + '%';
+  fill.style.background = colors[score - 1] || '#ede6d6';
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pw = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+
+  if (!email || !pw) { errEl.textContent = 'Please fill in all fields.'; return; }
+
+  const users = getUsers();
+  const user = users.find(u => u.email === email);
+  if (!user) { errEl.textContent = 'No account found with that email.'; return; }
+
+  const hash = await hashPassword(pw);
+  if (hash !== user.passwordHash) { errEl.textContent = 'Incorrect password.'; return; }
+
+  // Update last login
+  user.lastLogin = Date.now();
+  saveUsers(users);
+  setSession(user);
+  enterApp(user);
+}
+
+async function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const pw = document.getElementById('regPassword').value;
+  const confirm = document.getElementById('regConfirm').value;
+  const errEl = document.getElementById('registerError');
+  errEl.textContent = '';
+
+  if (!name || !email || !pw || !confirm) { errEl.textContent = 'Please fill in all fields.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email address.'; return; }
+  if (pw.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+  if (pw !== confirm) { errEl.textContent = 'Passwords do not match.'; return; }
+
+  const users = getUsers();
+  if (users.find(u => u.email === email)) { errEl.textContent = 'An account with this email already exists.'; return; }
+
+  const hash = await hashPassword(pw);
+  const isFirst = users.length === 0;
+  const newUser = {
+    id: 'u_' + Date.now(),
+    name,
+    email,
+    passwordHash: hash,
+    role: isFirst ? 'admin' : 'user',
+    joinedAt: Date.now(),
+    lastLogin: Date.now(),
+    progress: { currentDay: 1, completedDays: [], streak: 0 }
+  };
+
+  users.push(newUser);
+  saveUsers(users);
+  setSession(newUser);
+  enterApp(newUser);
+}
+
+function handleGuest() {
+  const guestUser = { name: 'Guest', email: '', role: 'guest', id: 'guest' };
+  setSession(guestUser);
+  enterApp(guestUser);
+}
+
+function handleLogout(e) {
+  e && e.stopPropagation();
+  clearSession();
+  location.reload();
+}
+
+function enterApp(user) {
+  document.getElementById('authScreen').style.display = 'none';
+  // Load user-specific progress
+  if (user.role !== 'guest') {
+    const users = getUsers();
+    const u = users.find(x => x.email === user.email);
+    if (u && u.progress) {
+      currentDay = u.progress.currentDay || 1;
+      completedDays = new Set(u.progress.completedDays || []);
+      streak = u.progress.streak || 0;
+    }
+  } else {
+    loadState(); // guest uses generic localStorage
+  }
+
+  // Update header UI
+  const initials = user.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) || '?';
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userDisplayName').textContent = user.name.split(' ')[0];
+
+  if (user.role === 'admin') {
+    document.getElementById('adminMenuItem').style.display = 'flex';
+    document.getElementById('adminSep').style.display = 'block';
+  }
+
+  renderHero();
+  renderStreak();
+  renderCalendar();
+}
+
+// ─── SAVE PER-USER PROGRESS ───
+const _origSaveState = saveState;
+function saveState() {
+  const sess = getSession();
+  if (sess && sess.role !== 'guest') {
+    const users = getUsers();
+    const u = users.find(x => x.email === sess.email);
+    if (u) {
+      u.progress = { currentDay, completedDays: [...completedDays], streak };
+      saveUsers(users);
+    }
+  } else {
+    localStorage.setItem('articulateState', JSON.stringify({ currentDay, completedDays: [...completedDays], streak }));
+  }
+}
+
+// ─── USER DROPDOWN ───
+function toggleDropdown() {
+  document.getElementById('userDropdown').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('userMenu').contains(e.target)) {
+    document.getElementById('userDropdown').classList.remove('open');
+  }
+});
+
+// ─── ADMIN PANEL ───
+function openAdmin(e) {
+  e && e.stopPropagation();
+  document.getElementById('userDropdown').classList.remove('open');
+  renderAdminPanel();
+  document.getElementById('adminPanel').classList.add('open');
+}
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function renderAdminPanel() {
+  const users = getUsers();
+  const now = Date.now();
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
+  const activeUsers = users.filter(u => (now - (u.lastLogin || 0)) < sevenDays).length;
+  const completed = users.filter(u => u.progress && u.progress.completedDays && u.progress.completedDays.length >= 28).length;
+
+  document.getElementById('statTotal').textContent = users.length;
+  document.getElementById('statActive').textContent = activeUsers;
+  document.getElementById('statComplete').textContent = completed;
+
+  const tbody = document.getElementById('usersTableBody');
+  const empty = document.getElementById('emptyUsers');
+
+  if (users.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = users.map(u => {
+    const initials = u.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) || '?';
+    const joined = new Date(u.joinedAt).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    const progress = u.progress ? `Day ${u.progress.currentDay || 1}/28` : 'Day 1/28';
+    const roleBadge = u.role === 'admin' ? `<span class="badge-admin">admin</span>` : `<span class="badge-user">user</span>`;
+    return `<tr>
+      <td><div class="user-row-avatar">${initials}</div></td>
+      <td style="font-weight:500">${u.name}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.8rem">${u.email}</td>
+      <td style="color:var(--muted);font-size:0.8rem">${joined}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--amber)">${progress}</td>
+      <td>${roleBadge}</td>
+      <td><button class="copy-email-btn" onclick="copyEmail('${u.email}', this)">Copy</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function copyEmail(email, btn) {
+  navigator.clipboard.writeText(email).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.style.borderColor = 'var(--sage)';
+    btn.style.color = 'var(--sage)';
+    setTimeout(() => { btn.textContent = 'Copy'; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
+  });
+}
+
+function exportEmails() {
+  const users = getUsers();
+  if (!users.length) { alert('No users to export yet.'); return; }
+  const rows = [
+    ['Name', 'Email', 'Role', 'Joined', 'Current Day', 'Streak'],
+    ...users.map(u => [
+      u.name,
+      u.email,
+      u.role,
+      new Date(u.joinedAt).toISOString().split('T')[0],
+      u.progress ? u.progress.currentDay : 1,
+      u.progress ? u.progress.streak : 0
+    ])
+  ];
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'articulate_users_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+}
+
+// ─── INIT ───
+(function init() {
+  const sess = getSession();
+  if (sess) {
+    // Resume session
+    if (sess.role !== 'guest') {
+      const users = getUsers();
+      const u = users.find(x => x.email === sess.email);
+      if (u) { enterApp(u); return; }
+    } else {
+      enterApp(sess); return;
+    }
+  }
+  // Show auth screen (already visible by default)
+})();
+</script>
+</body>
+</html>
